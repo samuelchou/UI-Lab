@@ -1,8 +1,9 @@
-package studio.ultoolapp.uilab
+package studio.ultoolapp.uilab.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import studio.ultoolapp.uilab.R
 import studio.ultoolapp.uilab.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
