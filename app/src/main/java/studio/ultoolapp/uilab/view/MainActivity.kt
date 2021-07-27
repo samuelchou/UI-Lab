@@ -14,6 +14,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        binding.textView.text = "Hello Data Binding"
+        // TODO: 2021/7/27 setup fragments...
     }
 }
