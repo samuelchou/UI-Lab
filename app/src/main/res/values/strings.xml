@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">UI Lab</string>
+    <string name="title_list_fragment">下拉刷新</string>
+    <string name="title_pull_up_fragment">上滑刷新</string>
 </resources>
