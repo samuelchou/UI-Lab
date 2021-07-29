@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                 override fun createFragment(position: Int): Fragment {
                     return when (position) {
                         0 -> ListFragment()
-                        else -> PullUpRefreshFragment()
+                        else -> PullUpLoadMoreFragment()
                     }
                 }
             }
