@@ -3,6 +3,7 @@ package studio.ultoolapp.uilab.view.component
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -31,6 +32,7 @@ abstract class SimpleLoadMoreAdapter :
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 val layoutManager = (recyclerView.layoutManager as LinearLayoutManager)
                 val lastVisibleItem = layoutManager.findLastCompletelyVisibleItemPosition()
+                if (canLoadMore(itemCount - 1).not()) return
                 if (isLoading.not() && lastVisibleItem >= itemCount - 1 - preloadThreshold) {
                     Log.d(TAG, "onScrolled: start loading: item scrolls to $lastVisibleItem")
                     isLoading = true
@@ -41,6 +43,8 @@ abstract class SimpleLoadMoreAdapter :
     }
 
     abstract fun loadMore()
+
+    abstract fun canLoadMore(totalItemCountNow: Int): Boolean
 
     override fun getItemViewType(position: Int): Int {
         return if (position == itemCount - 1) {
@@ -56,6 +60,7 @@ abstract class SimpleLoadMoreAdapter :
         val layoutInflater = LayoutInflater.from(parent.context)
         if (viewType == VIEW_HOLDER_TYPE_LOADING) {
             ItemLoadingBinding.inflate(layoutInflater, parent, false).apply {
+                this.root.isVisible = false
                 return object : RecyclerView.ViewHolder(this.root) {}
             }
         } else ItemSimpleDataBinding.inflate(layoutInflater, parent, false).apply {
@@ -66,6 +71,9 @@ abstract class SimpleLoadMoreAdapter :
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is SimpleItemViewHolder) {
             holder.setItem(getItem(position))
+        }
+        if (getItemViewType(position) == VIEW_HOLDER_TYPE_LOADING) {
+            holder.itemView.isVisible = isLoading
         }
     }
 }

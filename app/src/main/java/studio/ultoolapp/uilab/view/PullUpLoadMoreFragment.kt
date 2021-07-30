@@ -38,6 +38,10 @@ class PullUpLoadMoreFragment : Fragment() {
             override fun loadMore() {
                 this@PullUpLoadMoreFragment.loadMore()
             }
+
+            override fun canLoadMore(totalItemCountNow: Int): Boolean {
+                return alreadyLoaded <= 50
+            }
         }
 
         binding.itemContainer.run {
