@@ -1,14 +1,11 @@
 package studio.ultoolapp.uilab.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import studio.ultoolapp.uilab.databinding.FragmentPullUpLoadMoreBinding
 import studio.ultoolapp.uilab.view.component.SimpleData
 import studio.ultoolapp.uilab.view.component.SimpleLoadMoreAdapter
@@ -19,7 +16,6 @@ class PullUpLoadMoreFragment : Fragment() {
 
     private lateinit var binding: FragmentPullUpLoadMoreBinding
     private var alreadyLoaded = 0
-    private var isLoading = false
 
     private var mAdapter: SimpleLoadMoreAdapter? = null
 
@@ -38,25 +34,16 @@ class PullUpLoadMoreFragment : Fragment() {
     }
 
     private fun setupList() {
-        mAdapter = SimpleLoadMoreAdapter()
+        mAdapter = object : SimpleLoadMoreAdapter() {
+            override fun loadMore() {
+                this@PullUpLoadMoreFragment.loadMore()
+            }
+        }
+
         binding.itemContainer.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-            adapter = mAdapter
 
-            addOnScrollListener(object : RecyclerView.OnScrollListener() {
-                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                    super.onScrolled(recyclerView, dx, dy)
-                    val lastVisibleItem =
-                        (layoutManager as LinearLayoutManager).findLastCompletelyVisibleItemPosition()
-                    val lastItem = adapter!!.itemCount - 1
-                    Log.d("PullUpLoadMore",
-                        "onScrolled: scroll to $lastVisibleItem / last item is $lastItem")
-                    if (lastVisibleItem >= lastItem && isLoading.not()) {
-                        Toast.makeText(context, "Reached bottom.", Toast.LENGTH_SHORT).show()
-                        loadMore()
-                    }
-                }
-            })
+            mAdapter?.setupWithRecyclerView(this)
         }
 
         mAdapter?.submitList(getDummyList(30))
@@ -64,12 +51,11 @@ class PullUpLoadMoreFragment : Fragment() {
     }
 
     private fun loadMore() {
-        isLoading = true
         Timer().schedule(800) {
             binding.root.post {
                 alreadyLoaded += 10
                 mAdapter?.submitList(getDummyList(alreadyLoaded))
-                isLoading = false
+                mAdapter?.isLoading = false
             }
         }
     }
