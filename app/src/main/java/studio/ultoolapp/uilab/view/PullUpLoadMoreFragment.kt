@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import studio.ultoolapp.uilab.databinding.FragmentPullUpLoadMoreBinding
 import studio.ultoolapp.uilab.view.component.SimpleData
-import studio.ultoolapp.uilab.view.component.SimpleItemAdapter
+import studio.ultoolapp.uilab.view.component.SimpleLoadMoreAdapter
 import java.util.*
 import kotlin.concurrent.schedule
 
@@ -21,7 +21,7 @@ class PullUpLoadMoreFragment : Fragment() {
     private var alreadyLoaded = 0
     private var isLoading = false
 
-    private var mAdapter: SimpleItemAdapter? = null
+    private var mAdapter: SimpleLoadMoreAdapter? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,7 +38,7 @@ class PullUpLoadMoreFragment : Fragment() {
     }
 
     private fun setupList() {
-        mAdapter = SimpleItemAdapter()
+        mAdapter = SimpleLoadMoreAdapter()
         binding.itemContainer.run {
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
             adapter = mAdapter
