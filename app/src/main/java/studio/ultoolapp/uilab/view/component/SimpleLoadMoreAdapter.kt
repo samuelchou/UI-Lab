@@ -74,6 +74,13 @@ abstract class SimpleLoadMoreAdapter :
         }
         if (getItemViewType(position) == VIEW_HOLDER_TYPE_LOADING) {
             holder.itemView.isVisible = isLoading
+            // to avoid spaces at bottom when cannot load anymore
+            holder.itemView.layoutParams = if (isLoading) {
+                RecyclerView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT)
+            } else {
+                RecyclerView.LayoutParams(0, 0)
+            }
         }
     }
 }
