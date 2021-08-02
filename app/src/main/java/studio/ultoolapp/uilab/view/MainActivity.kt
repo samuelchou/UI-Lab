@@ -1,5 +1,7 @@
 package studio.ultoolapp.uilab.view
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
@@ -10,6 +12,13 @@ import studio.ultoolapp.uilab.R
 import studio.ultoolapp.uilab.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
+    companion object {
+        fun start(context: Context) {
+            Intent(context, MainActivity::class.java).run {
+                context.startActivity(this)
+            }
+        }
+    }
 
     private lateinit var binding: ActivityMainBinding
 

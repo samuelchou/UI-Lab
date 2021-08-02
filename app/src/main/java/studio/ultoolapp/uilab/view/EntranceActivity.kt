@@ -1,6 +1,7 @@
 package studio.ultoolapp.uilab.view
 
 import android.os.Bundle
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import studio.ultoolapp.uilab.databinding.ActivityEntranceBinding
 
@@ -16,6 +17,11 @@ class EntranceActivity : AppCompatActivity() {
     }
 
     private fun setupBinding() {
-        // TODO: 2021/8/2 setup btn click link
+        binding.btnAdapter.setOnClickListener {
+            MainActivity.start(this)
+        }
+        binding.btnView.setOnClickListener {
+            Toast.makeText(this, "Page not set yet", Toast.LENGTH_SHORT).show()
+        }
     }
 }
