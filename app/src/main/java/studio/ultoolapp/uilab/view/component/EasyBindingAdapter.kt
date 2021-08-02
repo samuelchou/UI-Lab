@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class EasyBindingAdapter<T, VB : ViewDataBinding>(
-    diff: DiffUtil.ItemCallback<T>,
     @LayoutRes val bindingLayoutId: Int,
+    diff: DiffUtil.ItemCallback<T>,
 ) : ListAdapter<T, EasyBindingAdapter.AbViewHolder<VB>>(diff) {
 
     class AbViewHolder<VB : ViewDataBinding>(val binding: VB) :
