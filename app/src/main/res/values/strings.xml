@@ -2,4 +2,6 @@
     <string name="app_name">UI Lab</string>
     <string name="title_list_fragment">下拉刷新</string>
     <string name="title_pull_up_fragment">上滑刷新</string>
+    <string name="title_adapter_verstion">Written in Adapter</string>
+    <string name="title_view_version">Written in View</string>
 </resources>
