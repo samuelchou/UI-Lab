@@ -37,7 +37,7 @@ class CustomListFragment : Fragment() {
 
     private fun setupList() {
         mAdapter = object : EasyBindingAdapter<SimpleData, ItemSimpleDataBinding>(
-            R.layout.item_simple_data, SimpleItemDiffCallback) {
+            R.layout.item_simple_data, SimpleItemDiffCallback, lifecycleOwner = this) {
             override fun bindData(binding: ItemSimpleDataBinding, position: Int, data: SimpleData) {
                 binding.textTitle.text = data.text
                 binding.textSubTitle.text = "ID: ${data.id}"

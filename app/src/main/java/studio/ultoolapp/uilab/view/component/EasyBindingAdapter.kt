@@ -5,13 +5,15 @@ import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 abstract class EasyBindingAdapter<T, VB : ViewDataBinding>(
-    @LayoutRes val bindingLayoutId: Int,
+    @LayoutRes private val bindingLayoutId: Int,
     diff: DiffUtil.ItemCallback<T>,
+    private val lifecycleOwner: LifecycleOwner? = null,
 ) : ListAdapter<T, EasyBindingAdapter.AbViewHolder<VB>>(diff) {
 
     class AbViewHolder<VB : ViewDataBinding>(val binding: VB) :
@@ -21,6 +23,7 @@ abstract class EasyBindingAdapter<T, VB : ViewDataBinding>(
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: VB =
             DataBindingUtil.inflate(layoutInflater, bindingLayoutId, parent, false)
+        lifecycleOwner?.let { binding.lifecycleOwner = it }
         return AbViewHolder(binding)
     }
 
