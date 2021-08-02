@@ -39,7 +39,7 @@ class CustomAdapterActivity : AppCompatActivity() {
                 override fun createFragment(position: Int): Fragment {
                     return when (position) {
                         0 -> CustomListFragment()
-                        else -> PullUpLoadMoreFragment()
+                        else -> CustomPullUpFragment()
                     }
                 }
             }
