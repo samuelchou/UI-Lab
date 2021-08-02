@@ -18,7 +18,7 @@ class EntranceActivity : AppCompatActivity() {
 
     private fun setupBinding() {
         binding.btnAdapter.setOnClickListener {
-            MainActivity.start(this)
+            PresetAdapterActivity.start(this)
         }
         binding.btnView.setOnClickListener {
             Toast.makeText(this, "Page not set yet", Toast.LENGTH_SHORT).show()

@@ -9,29 +9,29 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import studio.ultoolapp.uilab.R
-import studio.ultoolapp.uilab.databinding.ActivityMainBinding
+import studio.ultoolapp.uilab.databinding.ActivityPresetAdapterBinding
 
-class MainActivity : AppCompatActivity() {
+class PresetAdapterActivity : AppCompatActivity() {
     companion object {
         fun start(context: Context) {
-            Intent(context, MainActivity::class.java).run {
+            Intent(context, PresetAdapterActivity::class.java).run {
                 context.startActivity(this)
             }
         }
     }
 
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityPresetAdapterBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_preset_adapter)
 
         setupPages()
     }
 
     private fun setupPages() {
         binding.viewPager.run {
-            adapter = object : FragmentStateAdapter(this@MainActivity) {
+            adapter = object : FragmentStateAdapter(this@PresetAdapterActivity) {
                 override fun getItemCount(): Int {
                     return 2
                 }
