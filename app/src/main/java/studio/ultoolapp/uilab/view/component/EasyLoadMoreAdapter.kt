@@ -13,6 +13,17 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * EasyLoadMoreAdapter by STC, 2021/08
+ * Usage: set on a linear list with items, it will provides a "Load More" operations on scroll to bottom.
+ *
+ * Steps:
+ * 1. Prepare Layout: item and loading, with DataBinding structure.
+ * 2. Inherit and Override: [bindData], [canLoadMore], [loadMore] (and [bindLoading] if needed)
+ * 3. Prepare RecyclerView: must be set with LinearLayoutManager. Horizontal / Vertical is both accepted.
+ * 4. Add Scroll Listener: call [setupWithRecyclerView]
+ * 5. Enjoy your endless-scroll list!
+ */
 abstract class EasyLoadMoreAdapter<ITEM, ITEM_VB : ViewDataBinding, LOADING_VB : ViewDataBinding>(
     @LayoutRes private val itemLayoutId: Int,
     @LayoutRes private val loadingLayoutId: Int,
