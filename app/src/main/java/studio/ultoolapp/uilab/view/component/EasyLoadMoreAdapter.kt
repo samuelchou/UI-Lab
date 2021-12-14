@@ -45,6 +45,12 @@ abstract class EasyLoadMoreAdapter<ITEM, ITEM_VB : ViewDataBinding, LOADING_VB :
      */
     var preloadThreshold = 2
     var isLoading = false
+        set(value) {
+            loadingViewHolder?.itemView?.isVisible = value
+            field = value
+        }
+
+    private var loadingViewHolder: RecyclerView.ViewHolder? = null
 
     private lateinit var originalLoadingParams: ViewGroup.LayoutParams
 
@@ -102,13 +108,15 @@ abstract class EasyLoadMoreAdapter<ITEM, ITEM_VB : ViewDataBinding, LOADING_VB :
                 @Suppress("UNCHECKED_CAST")
                 bindData(holder.binding as ITEM_VB, position, getItem(position))
             } else {
-                Log.e(TAG,
-                    "onBindViewHolder: failed bind data at position $position: " +
+                Log.e(
+                    TAG, "onBindViewHolder: failed bind data at position $position: " +
                             "type detected as " + holder::class.simpleName,
-                    TypeCastException("ViewHolder"))
+                    TypeCastException("ViewHolder")
+                )
             }
         } else if (getItemViewType(position) == VIEW_HOLDER_TYPE_LOADING) {
             holder.itemView.isVisible = isLoading
+            loadingViewHolder = holder
             // to avoid spaces at bottom when cannot load anymore
             holder.itemView.layoutParams = if (isLoading) {
                 originalLoadingParams
@@ -120,12 +128,18 @@ abstract class EasyLoadMoreAdapter<ITEM, ITEM_VB : ViewDataBinding, LOADING_VB :
                 @Suppress("UNCHECKED_CAST")
                 bindLoading(holder.binding as LOADING_VB, position)
             } else {
-                Log.e(TAG,
-                    "onBindViewHolder: failed bind loading at position $position: " +
+                Log.e(
+                    TAG, "onBindViewHolder: failed bind loading at position $position: " +
                             "type detected as " + holder::class.simpleName,
-                    TypeCastException("ViewHolder"))
+                    TypeCastException("ViewHolder")
+                )
             }
         }
+    }
+
+    override fun onViewDetachedFromWindow(holder: RecyclerView.ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+        if (holder == loadingViewHolder) loadingViewHolder = null
     }
 
     abstract fun bindData(binding: ITEM_VB, position: Int, data: ITEM)
